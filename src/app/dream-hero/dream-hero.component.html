@@ -1,0 +1,26 @@
+<section class="dream" aria-label="Your sleep quality is important to us">
+  <div class="stage">
+    <div class="sky"></div>
+
+    <div class="dream-text">
+      <h1>Your Sleep Quality is Important to us...</h1>
+      <p class="lead">Manufacturers of world's leading fibre made
+        <strong>WASHABLE, HYGENIC, NO HEAT &amp; NON ALLERGIC</strong></p>
+      <a routerLink="/products" class="btn">Explore Our Products <span class="material-symbols-outlined">arrow_right_alt</span></a>
+    </div>
+
+    <img class="feather f1" [src]="img(feather1)" alt="" aria-hidden="true" (error)="hide($event)">
+    <img class="feather f2" [src]="img(feather2)" alt="" aria-hidden="true" (error)="hide($event)">
+    <img class="feather f3" [src]="img(feather1)" alt="" aria-hidden="true" (error)="hide($event)">
+    <img class="feather f4" [src]="img(feather2)" alt="" aria-hidden="true" (error)="hide($event)">
+    <img class="feather f5" [src]="img(feather1)" alt="" aria-hidden="true" (error)="hide($event)">
+
+    <!-- layer order (back to front): curve -> bed -> girl -> bed-front -->
+    <div class="curve"></div>
+    <img class="bed" [src]="img(bed)" alt="Premium mattress bed" (error)="hide($event)">
+    <img class="girl" [src]="img(girl)" alt="A woman floating down onto a comfortable bed" (error)="hide($event)">
+    <!-- front copy of the bed: only the lower mattress/duvet shows, so she looks tucked in -->
+
+  </div>
+</section>
+

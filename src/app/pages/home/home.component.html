@@ -1,0 +1,104 @@
+
+<!-- Hero -->
+<app-dream-hero *ngIf="showDream" />
+
+<!-- Feature strip -->
+
+
+  <!-- Feature strip -->
+  <section class="features">
+    <div class="container features-in">
+      <div class="feature" *ngFor="let f of features">
+        <span class="ring"><span class="material-symbols-outlined">{{ f.icon }}</span></span>
+        <span>{{ f.title }}<br>{{ f.sub }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section id="products" class="categories">
+    <div class="container">
+      <h2 class="section-title">Our Product Categories</h2>
+      <p class="section-sub">Complete range of bedding products for every need</p>
+      <div class="cat-grid">
+        <article class="cat-card" *ngFor="let c of categories">
+          <img [src]="img(c.img)" [alt]="c.name" loading="lazy">
+          <div class="cat-body">
+            <h3>{{ c.name }}</h3>
+            <p>{{ c.tags.join(' | ') }}</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <div class="about-img"><img [src]="img('factory.png')" alt="SriSathy Priyaa Mill building" loading="lazy"></div>
+    <div class="about-text">
+      <small>ABOUT US</small>
+      <h2>We Create Better Sleep</h2>
+      <p>SriSathy Priyaa Mill is a leading manufacturer of fibre made bedding products, committed to providing comfort, hygiene and quality for a healthier life. Our products are designed to support good sleep and overall well-being.</p>
+      <a routerLink="/about" class="btn">Know More About Us <span class="material-symbols-outlined">arrow_right_alt</span></a>
+    </div>
+    <ul class="about-points">
+      <li *ngFor="let p of aboutPoints">
+        <span class="ring"><span class="material-symbols-outlined">{{ p.icon }}</span></span>{{ p.label }}
+      </li>
+    </ul>
+  </section>
+
+  <!-- Featured products -->
+  <section class="featured">
+    <div class="container">
+      <h2 class="section-title">Featured Products</h2>
+      <p class="section-sub">Discover our most popular and trusted products</p>
+      <div class="carousel">
+        <button class="arrow" (click)="prev()" [disabled]="start === 0" aria-label="Previous"><span class="material-symbols-outlined">chevron_left</span></button>
+        <div class="viewport">
+          <div class="track" [style.transform]="'translateX(-' + start * slideWidth + '%)'">
+            <article class="prod-card" *ngFor="let p of featured" [style.flex-basis.%]="slideWidth">
+              <div class="prod-in">
+                <img [src]="img(p.img)" [alt]="p.name" loading="lazy">
+                <h3>{{ p.name }}</h3>
+                <p>Size: {{ p.size }}</p>
+                <button class="btn small" (click)="enquire(p.name)">Enquire Now</button>
+              </div>
+            </article>
+          </div>
+        </div>
+        <button class="arrow" (click)="next()" [disabled]="start >= maxStart" aria-label="Next"><span class="material-symbols-outlined">chevron_right</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why us + testimonials -->
+  <section class="why">
+    <div class="container why-in">
+      <div class="why-list">
+        <h2><span class="material-symbols-outlined">favorite</span> Why Choose Us?</h2>
+        <ul><li *ngFor="let w of why"><span class="material-symbols-outlined">check_box</span>{{ w }}</li></ul>
+      </div>
+      <div class="review">
+        <h3>What Our Customers Say</h3>
+        <div class="review-card">
+          <div>
+            <p>"{{ reviews[reviewIndex].text }}"</p>
+            <strong>– {{ reviews[reviewIndex].name }}</strong>
+            <div class="stars"><span *ngFor="let s of stars(reviews[reviewIndex].stars)" class="material-symbols-outlined">star</span></div>
+          </div>
+          <button class="arrow" (click)="nextReview()" aria-label="Next review"><span class="material-symbols-outlined">chevron_right</span></button>
+        </div>
+      </div>
+      <img class="why-img" [src]="img('sleeping.jpg')" alt="Woman sleeping comfortably" loading="lazy">
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container cta-in">
+      <span class="material-symbols-outlined cta-icon">mark_email_unread</span>
+      <div><h3>Have Any Questions?</h3><p>Get in touch with us for more information about our products.</p></div>
+      <a [href]="'mailto:' + email" class="btn small">Contact Us <span class="material-symbols-outlined">arrow_right_alt</span></a>
+    </div>
+  </section>

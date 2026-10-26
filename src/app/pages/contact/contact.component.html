@@ -1,0 +1,80 @@
+<!-- Hero -->
+<section class="c-hero" [style.--hero]="'url(' + img(heroImg) + ')'">
+  <div class="container c-hero-in">
+    <div class="c-hero-text">
+      <small class="eyebrow"><span>GET IN TOUCH</span></small>
+      <h1>Contact Us</h1>
+      <h2>We'd love to hear from you!</h2>
+      <p>For product enquiries, more information or any assistance, please feel free to reach out to us. Our team is here to help.</p>
+    </div>
+    <div class="c-script" aria-hidden="true">Better Sleep<br><span>Healthier Life</span> ♡</div>
+  </div>
+</section>
+
+<!-- Details + form + map -->
+<section class="container c-main">
+  <aside class="c-details">
+    <h2>Our Contact Details</h2>
+    <h3>SriSathy Priyaa Mill</h3>
+
+    <div class="c-row"><span class="dot"><span class="material-symbols-outlined">call</span></span>
+      <div><strong>Phone</strong><p>{{ site.phones[0] }} / {{ site.phones[1] }} / {{ site.phones[2] }}</p></div></div>
+    <div class="c-row"><span class="dot"><span class="material-symbols-outlined">mail</span></span>
+      <div><strong>Email</strong><p><a [href]="'mailto:' + site.email">{{ site.email }}</a></p></div></div>
+    <div class="c-row"><span class="dot"><span class="material-symbols-outlined">location_on</span></span>
+      <div><strong>Address</strong><p>{{ site.address }}</p></div></div>
+    <div class="c-row"><span class="dot"><span class="material-symbols-outlined">language</span></span>
+      <div><strong>Website</strong><p>{{ site.website }}</p></div></div>
+
+    <div class="c-row c-hours"><span class="dot outline"><span class="material-symbols-outlined">schedule</span></span>
+      <div><strong>Business Hours</strong><p>{{ hours.days }}<br>{{ hours.time }}</p><small>({{ hours.closed }})</small></div></div>
+
+    <div class="c-assist">
+      <span class="dot dark"><span class="material-symbols-outlined">chat</span></span>
+      <div>
+        <strong>Need Quick Assistance?</strong>
+        <p>Chat with us on WhatsApp</p>
+        <button class="btn" (click)="whatsapp()"><span class="material-symbols-outlined">chat_bubble</span> Chat Now</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="c-right">
+    <div class="c-form-card">
+      <h2>Send Us a Message</h2>
+      <p class="sub">Fill in the form below and we'll get back to you as soon as possible.</p>
+
+      <form #f (submit)="send($event, f)">
+        <div class="two">
+          <input name="name" type="text" placeholder="Your Name *" required autocomplete="name" aria-label="Your Name">
+          <input name="email" type="email" placeholder="Your Email *" required autocomplete="email" aria-label="Your Email">
+        </div>
+        <input name="phone" type="tel" placeholder="Phone Number *" required autocomplete="tel" aria-label="Phone Number">
+        <select name="subject" aria-label="Select Subject">
+          <option value="">Select Subject</option>
+          <option *ngFor="let s of subjects" [value]="s">{{ s }}</option>
+        </select>
+        <textarea name="message" rows="4" placeholder="Your Message *" required aria-label="Your Message"></textarea>
+        <div class="send">
+          <button class="btn" type="submit"><span class="material-symbols-outlined">send</span> Send Message</button>
+          <span class="note">We usually respond within 24 hours.</span>
+        </div>
+        <p *ngIf="sent" class="ok" role="status">Thank you! Your message is ready to send on WhatsApp.</p>
+      </form>
+    </div>
+
+    <div class="c-map">
+      <iframe [src]="mapUrl" title="SriSathy Priyaa Mill location" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Trust strip -->
+<section class="c-trust">
+  <div class="container c-trust-in">
+    <div *ngFor="let h of help">
+      <span class="ring big"><span class="material-symbols-outlined">{{ h.icon }}</span></span>
+      <div><strong>{{ h.title }}</strong><p>{{ h.text }}</p></div>
+    </div>
+  </div>
+</section>

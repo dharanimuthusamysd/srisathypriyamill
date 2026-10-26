@@ -1,0 +1,71 @@
+<ng-container *ngIf="view$ | async as v">
+  <section class="d-top">
+    <div class="container">
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a routerLink="/">Home</a> / <a routerLink="/products">Products</a> /
+        <a [routerLink]="['/products', v.category.slug]">{{ v.category.name }}</a> / <span>{{ v.product.name }}</span>
+      </nav>
+    </div>
+  </section>
+
+  <section class="container d-main">
+    <!-- Photos -->
+    <div class="d-gallery">
+      <img class="d-big" [src]="v.photos[active]" [alt]="v.product.name">
+      <div class="d-thumbs" *ngIf="v.photos.length > 1">
+        <button *ngFor="let p of v.photos; let i = index" [class.on]="i === active" (click)="active = i" [attr.aria-label]="'Photo ' + (i + 1)">
+          <img [src]="p" alt="">
+        </button>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="d-info">
+      <small class="tag">{{ v.category.name }}</small>
+      <h1>{{ v.product.name }}</h1>
+      <p class="desc">{{ v.product.desc || v.product.name + ' by SriSathy Priyaa Mill is made with premium fibre fill for everyday comfort, hygiene and long-lasting use.' }}</p>
+
+      <h2>Sizes / Specifications</h2>
+      <ul class="sizes" *ngIf="v.product.sizes?.length; else noSize">
+        <li *ngFor="let s of v.product.sizes">{{ s }}</li>
+      </ul>
+      <ng-template #noSize><p class="muted">Available in multiple sizes. Contact us for size details.</p></ng-template>
+
+      <h2>Features</h2>
+      <ul class="ticks">
+        <li *ngFor="let f of (v.product.features?.length ? v.product.features : defaultFeatures)"><span class="material-symbols-outlined">check_circle</span>{{ f }}</li>
+      </ul>
+
+      <ng-container *ngIf="v.product.care?.length">
+        <h2>Care Instructions</h2>
+        <ul class="ticks"><li *ngFor="let c of v.product.care"><span class="material-symbols-outlined">check_circle</span>{{ c }}</li></ul>
+      </ng-container>
+
+      <div class="actions">
+        <button class="btn" (click)="enquire(v)"><span class="material-symbols-outlined">chat_bubble</span> Enquire Now</button>
+        <a class="call" [href]="'tel:+91' + site.phones[0].replace(' ', '')"><span class="material-symbols-outlined">call</span> {{ site.phones[0] }}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related -->
+  <section class="d-related" *ngIf="v.related.length">
+    <div class="container">
+      <h3>More in {{ v.category.name }}</h3>
+      <div class="r-grid">
+        <a *ngFor="let r of v.related" class="r-card" [routerLink]="['/products', v.category.slug, r.slug]">
+          <img [src]="relatedImg(r, v.category.img)" [alt]="r.name" loading="lazy">
+          <span>{{ r.name }}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="d-cta">
+    <div class="container d-cta-in">
+      <span class="material-symbols-outlined">chat</span>
+      <div><strong>Have Any Questions?</strong><p>Get in touch with us for more information about our products.</p></div>
+      <a routerLink="/contact" class="d-cta-btn">Contact Us <span class="material-symbols-outlined">arrow_right_alt</span></a>
+    </div>
+  </section>
+</ng-container>

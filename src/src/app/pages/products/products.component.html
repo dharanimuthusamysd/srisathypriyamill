@@ -1,0 +1,58 @@
+<!-- Hero -->
+<section class="p-hero" [style.--hero]="'url(' + img(heroImg) + ')'">
+  <div class="container">
+    <div class="p-hero-text">
+      <small class="eyebrow"><span>OUR PRODUCTS</span></small>
+      <h1>Comfort for Every Moment</h1>
+      <p>Explore our wide range of high-quality, fibre made bedding products designed to give you better sleep, comfort and well-being.</p>
+      <div class="p-feats">
+        <div *ngFor="let f of features">
+          <span class="ring"><span class="material-symbols-outlined">{{ f.icon }}</span></span>
+          <span>{{ f.line1 }}<br>{{ f.line2 }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Categories -->
+<section class="p-cats container">
+  <small class="center-eyebrow">OUR PRODUCT RANGE</small>
+  <h2 class="section-title">Explore Our Categories</h2>
+  <p class="section-sub">Premium fibre made bedding products for a healthier and more comfortable life.</p>
+
+  <div class="p-grid">
+    <article *ngFor="let c of categories" class="p-card" [class.wide]="c.wide">
+      <a class="p-card-main" [routerLink]="['/products', c.slug]" [attr.aria-label]="'View ' + c.name">
+        <img [src]="img(c.img)" [alt]="c.name" loading="lazy">
+        <h3>{{ c.name }}</h3>
+        <p>{{ c.desc }}</p>
+      </a>
+      <ul class="p-list" [class.cols]="c.wide">
+        <li *ngFor="let i of listing(c)"><a [routerLink]="i.link">{{ i.name }}</a></li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Why -->
+<section class="p-why">
+  <img [src]="img(whyImg)" alt="Woman sleeping comfortably" loading="lazy">
+  <div class="p-why-text">
+    <small class="eyebrow-s">WHY CHOOSE US</small>
+    <h2>Better Products. Better Sleep.</h2>
+    <p>{{ whyText }}</p>
+  </div>
+  <ul class="p-why-list">
+    <li *ngFor="let w of whyPoints"><span class="material-symbols-outlined">check_circle</span>{{ w }}</li>
+  </ul>
+</section>
+
+<!-- CTA -->
+<section class="p-cta">
+  <div class="container p-cta-in">
+    <span class="material-symbols-outlined">chat</span>
+    <div><strong>Have Any Questions?</strong><p>Get in touch with us for more information about our products.</p></div>
+    <a [href]="'mailto:' + email" class="p-cta-btn">Contact Us <span class="material-symbols-outlined">arrow_right_alt</span></a>
+  </div>
+</section>

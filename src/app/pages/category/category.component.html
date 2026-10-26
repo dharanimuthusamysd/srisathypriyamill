@@ -1,0 +1,63 @@
+<ng-container *ngIf="view$ | async as v">
+  <ng-container *ngIf="v.c as c">
+    <section class="k-hero" [style.--hero]="'url(' + img(c.img) + ')'">
+      <div class="container">
+        <div class="k-hero-text">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a routerLink="/">Home</a> / <a routerLink="/products">Products</a> /
+            <ng-container *ngIf="v.group; else onlyCat">
+              <a [routerLink]="['/products', c.slug]">{{ c.name }}</a> / <span>{{ v.group.name }}</span>
+            </ng-container>
+            <ng-template #onlyCat><span>{{ c.name }}</span></ng-template>
+          </nav>
+          <h1>{{ v.group?.name ?? c.name }}</h1>
+          <p>{{ c.desc }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container k-products">
+      <h2 class="section-title">Our {{ v.group?.name ?? c.name }}</h2>
+      <p class="section-sub">{{ v.group ? v.group.items.length : total(c) }} products. Open a product for details or tap Enquire Now.</p>
+
+      <!-- sub-category tabs (only categories with named groups, e.g. Pillows) -->
+      <div class="k-tabs" *ngIf="c.groups.length > 1">
+        <a [routerLink]="['/products', c.slug]" [class.on]="!v.group">All {{ c.name }}</a>
+        <a *ngFor="let g of c.groups" [routerLink]="['/products', c.slug, g.slug]" [class.on]="v.group?.slug === g.slug">{{ g.name }}</a>
+      </div>
+
+      <div class="k-group" *ngFor="let g of v.shown" [id]="g.slug">
+        <h3 class="k-group-title" *ngIf="g.name && !v.group">{{ g.name }}</h3>
+        <div class="k-grid">
+          <article class="k-card" *ngFor="let it of g.items">
+            <a [routerLink]="['/products', c.slug, it.slug]" class="k-card-link">
+              <img [src]="productImg(it.img, c.img)" [alt]="it.name" loading="lazy">
+              <h3>{{ it.name }}</h3>
+              <p *ngIf="it.size">Size: {{ it.size }}</p>
+            </a>
+            <button class="btn small" (click)="enquire(it.name, c.name)">Enquire Now</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="k-others">
+      <div class="container">
+        <h3>Explore Other Categories</h3>
+        <div class="chips">
+          <ng-container *ngFor="let o of all">
+            <a *ngIf="o.slug !== c.slug" [routerLink]="['/products', o.slug]">{{ o.name }}</a>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+
+    <section class="k-cta">
+      <div class="container k-cta-in">
+        <span class="material-symbols-outlined">chat</span>
+        <div><strong>Have Any Questions?</strong><p>Get in touch with us for more information about our products.</p></div>
+        <a routerLink="/contact" class="k-cta-btn">Contact Us <span class="material-symbols-outlined">arrow_right_alt</span></a>
+      </div>
+    </section>
+  </ng-container>
+</ng-container>

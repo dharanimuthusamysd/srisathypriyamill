@@ -1,0 +1,83 @@
+<!-- Hero -->
+<section class="ab-hero" [style.background-image]="'url(' + img(heroImg) + ')'">
+  <div class="container">
+    <div class="ab-hero-text">
+      <h1>About Us</h1>
+      <h2>Crafting Better Sleep for a Healthier Tomorrow</h2>
+      <p>{{ intro }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Who we are -->
+<section class="ab-who container">
+  <img [src]="img(factoryImg)" alt="SriSathy Priyaa Mill building" loading="lazy">
+  <div>
+    <small class="ab-eyebrow">OUR STORY</small>
+    <h2 class="ab-h2">Who We Are</h2>
+    <p *ngFor="let p of who">{{ p }}</p>
+  </div>
+</section>
+
+<!-- Mission & vision -->
+<section class="ab-mv">
+  <div class="container ab-mv-in">
+    <div class="ab-mv-item">
+      <span class="ring big"><span class="material-symbols-outlined">target</span></span>
+      <div><h2 class="ab-h3">Our Mission</h2><p>{{ mission }}</p></div>
+    </div>
+    <div class="ab-mv-item ab-mv-divide">
+      <span class="ring big"><span class="material-symbols-outlined">visibility</span></span>
+      <div><h2 class="ab-h3">Our Vision</h2><p>{{ vision }}</p></div>
+    </div>
+    <div class="ab-script" aria-hidden="true">Better Sleep<br><span>Healthier Life</span> ♡</div>
+  </div>
+</section>
+
+<!-- Core values -->
+<section class="ab-values container">
+  <small class="ab-eyebrow">OUR VALUES</small>
+  <h2 class="ab-h2">Core Values</h2>
+  <div class="ab-values-grid">
+    <article *ngFor="let v of values; let i = index" class="ab-value" [class.wide]="i < 3">
+      <span class="ring"><span class="material-symbols-outlined">{{ v.icon }}</span></span>
+      <div><h3>{{ v.title }}</h3><p>{{ v.text }}</p></div>
+    </article>
+  </div>
+</section>
+
+<!-- Quality policy -->
+<section id="quality" class="ab-quality">
+  <img class="ab-quality-img" [src]="img(qualityImg)" alt="Soft white pillow" loading="lazy">
+  <div class="ab-quality-text">
+    <small class="ab-eyebrow">OUR QUALITY POLICY</small>
+    <h2 class="ab-h2">Commitment to Excellence</h2>
+    <p>{{ policy }}</p>
+  </div>
+  <ul class="ab-quality-list">
+    <li *ngFor="let p of policyPoints"><span class="material-symbols-outlined">check_circle</span>{{ p }}</li>
+  </ul>
+</section>
+
+<!-- Why choose us -->
+<section class="ab-why container">
+  <h2 class="ab-h2">Why Choose Us?</h2>
+  <div class="ab-why-grid">
+    <div *ngFor="let w of why" class="ab-why-item">
+      <span class="ring"><span class="material-symbols-outlined">{{ w.icon }}</span></span>
+      <span>{{ w.text }}</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="container ab-cta-wrap">
+  <div class="ab-cta">
+    <span class="material-symbols-outlined">bed</span>
+    <div>
+      <strong>Experience the comfort of better sleep with SriSathy Priyaa Mill.</strong>
+      <p>For more information about our products, feel free to contact us.</p>
+    </div>
+    <a [href]="'mailto:' + email" class="ab-cta-btn">Contact Us <span class="material-symbols-outlined">arrow_right_alt</span></a>
+  </div>
+</section>

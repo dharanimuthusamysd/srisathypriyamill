@@ -1,0 +1,69 @@
+<div class="topbar">
+  <div class="container topbar-in">
+    <span>Your Sleep Quality is Important to us...</span>
+    <div class="topbar-info">
+      <span><span class="material-symbols-outlined">call</span> {{ site.phones[0] }} | {{ site.phones[1] }} | {{ site.phones[2] }}</span>
+      <a [href]="'mailto:' + site.email"><span class="material-symbols-outlined">mail</span> {{ site.email }}</a>
+      <span><span class="material-symbols-outlined">location_on</span> Erode - 638011</span>
+    </div>
+  </div>
+</div>
+
+<header class="header">
+  <div class="container header-in">
+    <a routerLink="/" class="brand">
+      <img [src]="img('logo.jpg')" alt="Sri Sathy Priyaa Mill logo">
+      <span><strong>SRI SATHY PRIYAA MILL</strong><small>SLEEP Re-DEFINED</small></span>
+    </a>
+    <nav class="nav" [class.open]="menuOpen">
+      <a *ngFor="let n of nav" [routerLink]="n.route" [fragment]="n.fragment"
+         [routerLinkActive]="n.track ? 'active' : ''" [routerLinkActiveOptions]="{ exact: true }"
+         (click)="menuOpen = false">
+        {{ n.label }}<span *ngIf="n.label === 'Products'" class="material-symbols-outlined">expand_more</span>
+      </a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="Search"><span class="material-symbols-outlined">search</span></button>
+      <button class="icon-btn burger" aria-label="Menu" (click)="menuOpen = !menuOpen">
+        <span class="material-symbols-outlined">{{ menuOpen ? 'close' : 'menu' }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main><router-outlet /></main>
+
+<footer id="contact" class="footer">
+  <div class="container footer-in">
+    <div class="f-brand">
+      <div class="brand light">
+        <img [src]="img('logo.jpg')" alt="Logo">
+        <span><strong>SRI SATHY PRIYAA MILL</strong><small>SLEEP Re-DEFINED</small></span>
+      </div>
+      <p>We manufacture high-quality fibre bedding products for a healthier and more comfortable life.</p>
+      <div class="social">
+        <a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="YouTube">▶</a>
+      </div>
+    </div>
+    <div>
+      <h4>Quick Links</h4>
+      <ul><li *ngFor="let n of nav"><a [routerLink]="n.route" [fragment]="n.fragment">{{ n.label }}</a></li></ul>
+    </div>
+    <div>
+      <h4>Our Products</h4>
+      <ul><li *ngFor="let p of footerProducts"><a routerLink="/products">{{ p }}</a></li></ul>
+    </div>
+    <div>
+      <h4>Contact Us</h4>
+      <ul class="contact">
+        <li><span class="material-symbols-outlined">location_on</span>{{ site.address }}</li>
+        <li><span class="material-symbols-outlined">call</span>{{ site.phones[0] }} / {{ site.phones[1] }} | {{ site.phones[2] }}</li>
+        <li><span class="material-symbols-outlined">mail</span>{{ site.email }}</li>
+        <li><span class="material-symbols-outlined">language</span>{{ site.website }}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="container copy">
+    <span>© {{ year }} SriSathy Priyaa Mill. All Rights Reserved.</span><span>Sleep Re-Defined</span>
+  </div>
+</footer>

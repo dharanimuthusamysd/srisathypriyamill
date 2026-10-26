@@ -1,0 +1,92 @@
+:host { display: block; }
+
+/* ====== TWEAK HERE ====== */
+.dream {
+  --scroll-length: 260vh;     /* how long the scene stays pinned (bigger = slower story) */
+  --girl-w: min(54vw, 800px);
+  --bed-w: min(64vw, 980px);
+  --girl-start: -16vh;        /* where she starts (negative = above the screen) */
+  --girl-fall: 29vh;          /* how far she falls */
+  --bed-rise: 60vh;           /* how far the bed rises from below */
+  --header: 70px;
+
+  /* landing on the bed */
+  --land-start: .55;          /* scroll progress where she starts turning (0-1) */
+  --lie-rot: 0deg;
+  --lie-x: 0vw;
+  --lie-y: 0vh;
+  --lie-scale: 1;           /* her size when lying down */
+  --front-clip: 58%;          /* how much of the bed's top is hidden on the front layer */
+}
+
+.dream { position: relative; height: var(--scroll-length); background: #1c2030; }
+.stage {
+  position: sticky; top: var(--header);
+  height: calc(100vh - var(--header)); height: calc(100svh - var(--header));
+  overflow: hidden;
+
+  /* 0 until --land-start, then eases 0 -> 1 as she lands.
+     Declared on .stage so it always sees the --p set by your TS. */
+  --land: clamp(0, calc((var(--p, 0) - var(--land-start)) / (1 - var(--land-start))), 1);
+}
+
+.sky { position: absolute; inset: 0; background: radial-gradient(120% 90% at 70% 10%, #2b2236 0%, #1c2030 55%, #161a28 100%); }
+.sky::after { content: ''; position: absolute; inset: 0; background: radial-gradient(80% 60% at 55% 85%, rgba(111, 168, 255, .35), transparent 70%); opacity: calc(var(--p, 0) * .9); }
+
+/* text */
+.dream-text { position: absolute; z-index: 6; left: 6%; top: 14%; max-width: min(34%, 460px); color: #fff; pointer-events: none;
+  transform: translateY(calc(var(--p, 0) * -24px)); opacity: calc(1 - var(--p, 0) * .55); }
+.dream-text > * { pointer-events: auto; }
+h1 { font-size: clamp(30px, 4.2vw, 56px); font-weight: 500; line-height: 1.12; margin-bottom: 18px; }
+.lead { font-size: 15px; color: #d6e2f5; margin-bottom: 22px; strong { display: block; color: #fff; margin-top: 4px; } }
+.btn { background: #fff; color: var(--navy); &:hover { background: #eaf3fd; } }
+
+/* curved white floor like the reference */
+.curve { position: absolute; z-index: 2; left: -10%; bottom: -1px; width: 120%; height: 16vh; background: #fff; border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  transform: translateY(calc((1 - var(--p, 0)) * 14vh)); }
+
+/* bed rises UP (also used by .bed-front, same position and size) */
+.bed { position: absolute; z-index: 3; left: 50%; bottom: -3vh; width: var(--bed-w); height: auto;
+  margin-left: calc(var(--bed-w) * -.5 + 4vw);
+  transform: translate3d(0, calc((1 - var(--p, 0)) * var(--bed-rise)), 0);
+  filter: drop-shadow(0 34px 40px rgba(0, 0, 0, .45)); will-change: transform; }
+
+/* girl falls DOWN, then turns and lies on the bed */
+.girl { position: absolute; z-index: 4; left: 50%; top: 0; width: var(--girl-w); height: auto;
+  margin-left: calc(var(--girl-w) * -.5 + 4vw);
+  transform-origin: 50% 50%;
+  transform:
+    translate3d(
+      calc(var(--land) * var(--lie-x)),
+      calc(var(--girl-start) + var(--p, 0) * var(--girl-fall) + var(--land) * var(--lie-y)),
+      0)
+    rotate(calc(var(--p, 0) * -7deg + var(--land) * var(--lie-rot)))
+    scale(calc(1 - var(--land) * (1 - var(--lie-scale))));
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .35)); will-change: transform; }
+
+/* front layer: only the lower mattress/duvet, drawn OVER the girl */
+.bed-front { z-index: 5; pointer-events: none; filter: none;
+  clip-path: inset(var(--front-clip) 0 0 0); }
+
+/* feathers: drift on their own + move at different scroll speeds */
+.feather { position: absolute; z-index: 1; height: auto; pointer-events: none; opacity: .92;
+  transform: translate3d(0, calc(var(--p, 0) * var(--fy, 20vh)), 0) rotate(calc(var(--p, 0) * var(--fr, 30deg)));
+  animation: drift calc(var(--dur, 7s) * var(--slow, 1.7) / 1.7) ease-in-out infinite alternate; }
+.f1 { width: 9vw; max-width: 130px; left: 14%; top: 4%;  --fy: 60vh; --fr: 40deg; --dur: 7s; }
+.f2 { width: 5vw; max-width: 80px;  left: 36%; top: 56%; --fy: 18vh; --fr: -30deg; --dur: 9s; }
+.f3 { width: 8vw; max-width: 120px; left: 84%; top: 22%; --fy: 45vh; --fr: 35deg; --dur: 8s; }
+.f4 { width: 4vw; max-width: 60px;  left: 70%; top: 8%;  --fy: 70vh; --fr: -50deg; --dur: 6s; }
+.f5 { width: 6vw; max-width: 90px;  left: 6%;  top: 62%; --fy: 25vh; --fr: 25deg; --dur: 10s; }
+@keyframes drift { from { translate: -14px 0; rotate: -8deg; } to { translate: 18px 22px; rotate: 10deg; } }
+
+@media (max-width: 800px) {
+  .dream { --scroll-length: 230vh; --girl-w: 92vw; --bed-w: 112vw; --girl-fall: 44vh; --girl-start: -16vh; --bed-rise: 50vh;
+     --lie-x: 0vw; --lie-y: 0vh; --lie-scale: 1; }
+  .girl { margin-left: calc(var(--girl-w) * -.5); }
+  .bed { margin-left: calc(var(--bed-w) * -.5); }
+  .dream-text { left: 6%; right: 6%; max-width: none; top: 6%; text-align: center; }
+  .lead { display: none; }
+  h1 { font-size: 28px; }
+  .f1 { width: 14vw; } .f3 { width: 12vw; }
+}
+@media (prefers-reduced-motion: reduce) { .feather { animation: none; } }
